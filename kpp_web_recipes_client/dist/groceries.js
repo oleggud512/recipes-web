@@ -65,7 +65,7 @@ eval("const {\n  Observable\n} = __webpack_require__(/*! ../../../../../utils/ob
   \*****************************************************************************************************************/
 /***/ ((module) => {
 
-eval("class GroceryListElementState {\n  /**\n   * @type {Grocery[]}\n   */\n  groceries;\n  query;\n  currentlyEdited;\n  /**\n   * @type {Grocery}\n   */\n  groceryToAdd;\n  constructor(groceries = [], query = String(''), currentlyEdited = Number(null), groceryToAdd = null) {\n    this.groceries = groceries, this.query = query, this.currentlyEdited = currentlyEdited, this.groceryToAdd = groceryToAdd;\n  }\n}\nconst initState = {\n  groceries: [],\n  query: '',\n  currentlyEdited: Number(null),\n  groceryToAdd: null\n};\nmodule.exports = {\n  GroceryListElementState\n};\n\n//# sourceURL=webpack://my-webpack-project/./js/features/groceries/presentation/grocery_list_page/grocery_list_element/grocery_list_element_state.js?");
+eval("class GroceryListElementState {\n  /**\n   * @type {Grocery[]}\n   */\n  groceries;\n  query;\n  currentlyEdited;\n  /**\n   * @type {Grocery}\n   */\n  groceryToAdd;\n  constructor(groceries = [], query = String(''), currentlyEdited = Number(null), groceryToAdd = null) {\n    this.groceries = groceries, this.query = query, this.currentlyEdited = currentlyEdited, this.groceryToAdd = groceryToAdd;\n  }\n}\n\n// const initState = {\n//   groceries: [],\n//   query: '',\n//   currentlyEdited: Number(null),\n//   groceryToAdd: null\n// }\n\nmodule.exports = {\n  GroceryListElementState\n};\n\n//# sourceURL=webpack://my-webpack-project/./js/features/groceries/presentation/grocery_list_page/grocery_list_element/grocery_list_element_state.js?");
 
 /***/ }),
 

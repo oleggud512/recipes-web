@@ -1,4 +1,4 @@
 import { AxiosInstance, AxiosStatic } from "axios";
 
-const axios: AxiosStatic
-const client: AxiosInstance
+declare const axios: AxiosStatic
+declare const client: AxiosInstance

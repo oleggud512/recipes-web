@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
 
 app.get("/recipes", async (req, res) => {
   fs.readFile("./templates/recipes.html", 'utf8', (er, template) => {
-    const rendered = mustache.render(template, { someth: 'some texto' })
+    const rendered = mustache.render(template, { someth: 'render template' })
     res.send(rendered)
   })
 })
