@@ -1,9 +1,15 @@
+const { Constants } = require("../../utils/utils")
+
 class Templates {
+  static ifNull(variableName, valueIfNull) {
+    return `{{#${variableName}}}{{${variableName}}}{{/${variableName}}}{{^${variableName}}}${valueIfNull}{{/${variableName}}}`
+  }
+
   static groceryListItem = `
     <div class="grocery-item" id="grocery_{{id}}">
           
       <div class="photo-container">
-        <img src="{{photo}}" id="photo">
+        <img src="${this.ifNull('photoUrl', Constants.groceryPlaceholder)}" id="photo">
       </div>
 
       <div class="grocery-item-content">
@@ -19,7 +25,7 @@ class Templates {
     <div class="grocery-item" id="grocery_{{grocery.id}}">
     
       <div class="photo-container">
-        <img src="{{photo}}" id="photo">
+        <img src="${this.ifNull('photoUrl', Constants.groceryPlaceholder)}" id="photo">
         <button class="delete-photo-btn">
           <span class="material-symbols-outlined">
             close
@@ -42,7 +48,7 @@ class Templates {
     <div class="grocery-item" id="grocery_{{id}}">
             
       <div class="photo-container">
-        <img src="{{photo}}" id="photo">
+        <img src="${this.ifNull('photoUrl', Constants.groceryPlaceholder)}" id="photo">
       </div>
 
       <div class="grocery-item-content">
@@ -60,14 +66,14 @@ class Templates {
     <div class="grocery-item" id="grocery_{{id}}">
               
       <div class="photo-container">
-        <img src="{{photo}}" id="photo">
+        <img src="${this.ifNull('photoUrl', Constants.groceryPlaceholder)}" id="photo">
       </div>
 
       <div class="grocery-item-content">
         <span>{{name}}</span>
         <div class="buttons">
           <input id="grocery_{{id}}_amount_input" type="number" value="{{amount}}" class="text-field">
-          <button id="remove_grocery_{{id}}_btn">
+          <button id="remove_grocery_{{id}}_btn" class="delete">
             <span class="material-symbols-outlined">delete</span>
           </button>
         </div>
@@ -79,7 +85,7 @@ class Templates {
     <div class="grocery-item" id="grocery_{{id}}">
               
       <div class="photo-container">
-        <img src="{{photo}}" id="photo">
+        <img src="${this.ifNull('photoUrl', Constants.groceryPlaceholder)}" id="photo">
       </div>
 
       <div class="grocery-item-content">

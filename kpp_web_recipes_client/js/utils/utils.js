@@ -10,6 +10,14 @@ class Constants {
 
   static recipePlaceholder = "https://placehold.co/400x400/lightgrey/grey?text=No+image"
   static groceryPlaceholder = "https://placehold.co/100x100/lightgrey/grey?text=No+image"
+
+  static orGroceryPlaceholder(photoUrl) {
+    return photoUrl ?? this.groceryPlaceholder
+  }
+
+  static orRecipePlaceholder(photoUrl) {
+    return photoUrl ?? this.recipePlaceholder
+  }
 }
 
 function getPathSegments(href) {

@@ -51,6 +51,7 @@ class GroceryElement extends HTMLElement {
   }
 
   render(grocery, isEdit) {
+    // TODO: replace with the usage of Template class
     const template = `
       <div class="grocery-item" id="grocery_{{grocery.id}}">
         

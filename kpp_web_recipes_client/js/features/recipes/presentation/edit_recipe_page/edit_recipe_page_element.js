@@ -58,18 +58,14 @@ class EditRecipePageElement extends ObserverHTMLElement {
   connectedCallback() {
     const template = `
       <div class="container">
-        <div class="input-with-hint">
-          <p>Name</p>
-          <input type="text" id="nameInput" class="text-field">
-        </div>
+        <h4>Name</h4>
+        <input type="text" id="nameInput" class="text-field">
         
-        <div class="input-with-hint">
-          <p>Description</p>
-          <div contenteditable id="descriptionInput" class="text-field"></div>
-        </div>
+        <h4>Description</h4>
+        <div contenteditable id="descriptionInput" class="text-field"></div>
         
-        <div class="input-with-hint" id="imageContainer">
-          <p>Image</p>
+        <h4>Image</h4>
+        <div id="imageContainer">
           <img id="image" class="recipe-image">
           <input type="file" id="imageInput" accept="image/*">
           <button id="deleteImageBtn">
@@ -77,19 +73,25 @@ class EditRecipePageElement extends ObserverHTMLElement {
           </button>
         </div>
 
-        <div class="input-with-hint">
-          <p>Recipe</p>
+          <h4>Recipe</h4>
           <div contenteditable id="recipeInput" class="text-field"></div>
+
+        <div class="dual-groceries">
+          <div id="availableGroceries">
+            <h4>Available groceries</h4>
+            <div id="allGroceries"></div>
+          </div>
+          <div id="recipeGroceries">
+            <h4>Recipe groceries</h4>
+            <div id="groceryList"></div>
+          </div>
         </div>
 
-        <p>Groceries</p>
-        <div id="groceryList" class="item-grid-3"></div>
+        <div class="save-delete">
+          <button id="deleteBtn" class="delete">Delete</button>
+          <button id="saveBtn">Save</button>
+        </div>
 
-        <p>All groceries</p>
-        <div id="allGroceries" class="item-grid-3"></div>
-
-        <button id="saveBtn">Save</button>
-        <button id="deleteBtn" class="delete">Delete</button>
       </div>
     `
     this.innerHTML = template
@@ -169,7 +171,7 @@ class EditRecipePageElement extends ObserverHTMLElement {
     this.$descriptionInput.innerText = state.recipe?.description ?? ''
     this.$recipeInput.innerText = state.recipe?.recipe ?? ''
     if (this.$image.src != state.recipe?.photoUrl) {
-      this.$image.src = state.recipe?.photoUrl ?? 'https://placehold.co/400x400/lightgrey/grey?text=No+image'
+      this.$image.src = state.recipe?.photoUrl ?? Constants.recipePlaceholder
     }
 
     // initialize grocery list
@@ -178,9 +180,7 @@ class EditRecipePageElement extends ObserverHTMLElement {
     ) {
       const rendered = mustache.render(groceryListTemplate, {
         groceries: state.recipe.groceries,
-        photo: () => {
-          return this.photoUrl ?? Constants.groceryPlaceholder
-        }
+        photo: () => Constants.orGroceryPlaceholder(this.photoUrl)
       })
 
       this.$groceryList.innerHTML = rendered
@@ -230,11 +230,15 @@ class EditRecipePageElement extends ObserverHTMLElement {
         const groceryToAdd = state.recipe.groceries.find(
           g => this.$groceryList.querySelector(`#grocery_${g.id}`) == null)
         
-        const renderedGrocery = mustache.render(Templates.groceryAmountEdit, groceryToAdd)
+        const renderedGrocery = mustache.render(Templates.groceryAmountEdit, {
+          ...groceryToAdd,
+          photo: () => Constants.orGroceryPlaceholder(this.photoUrl)
+        })
   
         this.$groceryList.insertAdjacentHTML('beforeEnd', renderedGrocery)
         const groceryElement = this.$groceryList.querySelector(`#grocery_${groceryToAdd.id}`)
         this.setupGroceryListeners(groceryElement, groceryToAdd)
+        this.scrollToGroceryElement(groceryElement)
 
       } else if (state.recipe.groceries.length < this.$groceryList.childElementCount) {
         // remove grocery
@@ -247,6 +251,15 @@ class EditRecipePageElement extends ObserverHTMLElement {
       }
     }
 
+  }
+
+  scrollToGroceryElement(element) {
+    this.mainTopPosition ??= document.body.querySelector('main').getBoundingClientRect().top
+    if (element.getBoundingClientRect().bottom < this.mainTopPosition) {
+      element.scrollIntoView({
+        behavior: "smooth"
+      })
+    }
   }
 }
 

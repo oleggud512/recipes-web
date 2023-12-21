@@ -6,6 +6,8 @@
 
 .container {
   padding-block: 16px;
+  display: flex;
+  flex-direction: column;
 }
 
 .recipe-image {
@@ -50,4 +52,47 @@ input[type=file] {
 
 .delete:hover {
   background-color: #ff7777;
+}
+
+.dual-groceries {
+  flex-grow: 0;
+  display: grid;
+  gap: 16px;
+  grid-template-areas: 
+    'ava rec';
+}
+
+@media (max-width: 575px) {
+  .dual-groceries {
+    grid-template-areas: 
+      'rec' 
+      'ava';
+  }
+}
+
+#availableGroceries,
+#recipeGroceries,
+#availableGroceries > div,
+#recipeGroceries > div  {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+#recipeGroceries {
+  grid-area: rec;
+}
+
+#availableGroceries {
+  grid-area: ava;
+}
+
+.save-delete {
+  display: flex;
+  gap: 16px;
+  padding: 0;
+}
+
+.save-delete button {
+  flex: 1 1 auto;
 }

@@ -1,10 +1,14 @@
 package com.example.KppWebRecipes;
 
 import com.example.KppWebRecipes.grocery.etities.Grocery;
+import com.example.KppWebRecipes.recipe.dao.RecipeDAOFactory;
+import com.example.KppWebRecipes.recipe.dao.RecipeDAOType;
 import com.example.KppWebRecipes.recipe.entities.Recipe;
 import com.example.KppWebRecipes.recipe.entities.RecipeGrocery;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DbUtils {
 
@@ -78,6 +82,110 @@ public class DbUtils {
         st.addBatch(createRecipeGroceriesStatement);
         st.addBatch(createImagesStatement);
         st.executeBatch();
+    }
+
+    public static Recipe fillTables(
+            String name,
+            String recipe,
+            String description,
+            String photoUrl,
+            List<RecipeGrocery> groceries
+    ) throws Exception {
+        Connection con = Connector.getDefaultConnection();
+
+        long newRecipeId;
+        List<RecipeGrocery> actualGroceries = new ArrayList<RecipeGrocery>();
+
+        try (PreparedStatement ps = con.prepareStatement(
+                """
+                        INSERT INTO recipes(
+                            recipeName,
+                            recipeRecipe,
+                            recipeDescription,
+                            recipePhotoUrl)
+                        VALUE (?, ?, ?, ?)
+                    """,
+                Statement.RETURN_GENERATED_KEYS
+        )) {
+            ps.setString(1, name);
+            ps.setString(2, recipe);
+            ps.setString(3, description);
+            ps.setString(4, photoUrl);
+
+            int rowsUpdated = ps.executeUpdate();
+
+            if (rowsUpdated == 0) {
+                throw new SQLException("Failed to add recipe");
+            }
+
+            try (ResultSet res = ps.getGeneratedKeys()) {
+                if (!res.next()) {
+                    throw new SQLException("Failed to add recipe, unable to get recipeId");
+                }
+
+                newRecipeId = res.getLong(1);
+            }
+        }
+
+        try (PreparedStatement selectPs = con.prepareStatement("SELECT groceryId FROM groceries WHERE groceryName = ?");
+            PreparedStatement insertPs = con.prepareStatement("INSERT INTO groceries(groceryName) VALUE (?)", Statement.RETURN_GENERATED_KEYS)) {
+
+            for (RecipeGrocery grocery : groceries) {
+                selectPs.setString(1, grocery.getName());
+
+                try (ResultSet res = selectPs.executeQuery()) {
+                    if (res.next()) {
+                        actualGroceries.add(
+                                new RecipeGrocery(
+                                        res.getLong(DbUtils.groceryId),
+                                        grocery.getName(),
+                                        grocery.getPhotoUrl(),
+                                        grocery.getAmount()
+                                )
+                        );
+
+                        continue;
+                    }
+                }
+
+                insertPs.setString(1, grocery.getName());
+                insertPs.executeUpdate();
+
+                try (ResultSet keys = insertPs.getGeneratedKeys()) {
+                    if (keys.next()) {
+                        actualGroceries.add(
+                                new RecipeGrocery(
+                                        keys.getLong(1),
+                                        grocery.getName(),
+                                        grocery.getPhotoUrl(),
+                                        grocery.getAmount()
+                                )
+                        );
+                    }
+                }
+            }
+        }
+
+        try (PreparedStatement ps = con.prepareStatement("""
+            INSERT INTO recipe_groceries(recipeId, groceryId, groceryAmount)
+            VALUE (?, ?, ?)
+        """)) {
+            int i = 0;
+            for (RecipeGrocery grocery : actualGroceries) {
+                ps.setLong(1, newRecipeId);
+                ps.setLong(2, grocery.getId());
+                ps.setDouble(3, grocery.getAmount());
+
+                ps.addBatch();
+
+                i++;
+                if (i % 1000 == 0 || i == groceries.size()) {
+                    ps.executeBatch();
+                }
+            }
+        }
+
+        return RecipeDAOFactory.getDao(RecipeDAOType.MySQL).getRecipeById(newRecipeId);
     }
 
     // TODO: move this somewhere

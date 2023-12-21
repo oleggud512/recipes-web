@@ -3,6 +3,7 @@ class Route {
     this.name = args.name
     this.displayName = args.displayName ?? args.name
     this.href = args.href
+    this.nav = args.nav ?? false
   }
 
   isCurrent() {
@@ -13,6 +14,10 @@ class Route {
 class Router {
   constructor(routes) {
     this.routes = routes
+  }
+
+  get navigation() {
+    return this.routes.filter(r => r.nav)
   }
 
   navigateTo(routeName, args = {}) {
@@ -27,11 +32,9 @@ class Router {
     const queryString = new URLSearchParams(query).toString()
     
     const url = new URL(templateUrl.origin + updatedPathname + queryString)
-
     
-    history.pushState({}, "", url)
+    history.pushState({}, "", window.location.href)
     window.location.replace(url)
-    console.log('trying to navigate to ' + url)
   }
 }
 

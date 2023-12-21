@@ -1,25 +1,10 @@
 const mustache = require("mustache")
-
-class Route {
-  constructor(name, href) {
-    this.name = name
-    this.href = href
-  }
-
-  isCurrent() {
-    return window.location.href.endsWith(this.href)
-  }
-}
+const { globalRouter } = require("../router/router")
 
 class NavbarElement extends HTMLElement {
   constructor() {
     super()
   }
-
-  routes = [
-    new Route('Recipes', '/recipes'),
-    new Route('Groceries', '/groceries'),
-  ]
 
   connectedCallback() {
     this.render()
@@ -40,7 +25,7 @@ class NavbarElement extends HTMLElement {
           
           <ul class="menu">
             {{#routes}}
-              <li><a href="{{href}}" class="{{#isCurrent}}current{{/isCurrent}}">{{name}}</a></li>
+              <li><a href="{{href}}" class="{{#isCurrent}}current{{/isCurrent}}">{{displayName}}</a></li>
             {{/routes}}
           </ul>
 
@@ -48,7 +33,7 @@ class NavbarElement extends HTMLElement {
       </nav>
     `
     const rendered = mustache.render(template, {
-      routes: this.routes,
+      routes: globalRouter.navigation,
     })
     this.innerHTML = rendered
   }

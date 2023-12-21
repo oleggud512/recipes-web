@@ -12,20 +12,22 @@ const globalRouter = new Router([
   new Route({
     name: appRoutes.recipes,
     displayName: 'Recipes',
-    href: Constants.baseUrl + '/recipes'
+    href: Constants.baseUrl + '/recipes',
+    nav: true,
   }),
   new Route({
     name: appRoutes.groceries,
     displayName: 'Groceries',
-    href: Constants.baseUrl + '/groceries'
+    href: Constants.baseUrl + '/groceries',
+    nav: true,
   }),
   new Route({
     name: appRoutes.recipe,
-    href: Constants.baseUrl + '/recipes/:id'
+    href: Constants.baseUrl + '/recipes/:id',
   }),
   new Route({
     name: appRoutes.editRecipe,
-    href: Constants.baseUrl + '/recipes/:id/edit'
+    href: Constants.baseUrl + '/recipes/:id/edit',
   })
 ])
 

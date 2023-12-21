@@ -47,7 +47,7 @@ class EditRecipePageElementController extends ReduxObservable {
   changeImage(newImage) {
     this.dispatch(EditRecipePageAction.createChangeImageAction(
       newImage, 
-      URL.createObjectURL(newImage)
+      newImage ? URL.createObjectURL(newImage) : null
     ))
   }
 
@@ -101,6 +101,7 @@ class EditRecipePageElementController extends ReduxObservable {
       alert('Can\'t delete this recipe')
       return 
     }
+    await recipeRepository.deleteRecipe(this._state.recipe.id)
     globalRouter.navigateTo(appRoutes.recipes)
   }
 }

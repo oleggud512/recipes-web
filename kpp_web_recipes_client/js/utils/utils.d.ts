@@ -7,4 +7,6 @@ export class Constants {
   static baseImageUrl: string
   static groceryPlaceholder: string
   static recipePlaceholder: string
+  static orGroceryPlaceholder(photoUrl: string) : string
+  static orRecipePlaceholder(photoUrl: string) : string
 }

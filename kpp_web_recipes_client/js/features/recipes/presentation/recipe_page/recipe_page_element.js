@@ -28,9 +28,9 @@ class RecipePageElement extends ObserverHTMLElement {
       <div class="container">
         <h1 id="recipeName" class="recipe-name">{{recipe.name}}</h1>
         
-        <p>{{recipe.description}}</p>
+        <p class="display-text">{{recipe.description}}</p>
         
-        <img src="{{recipePhoto}}" id="recipeImg" class="recipe-image"/>
+        <img src="${Templates.ifNull("recipe.photoUrl", Constants.recipePlaceholder)}" id="recipeImg" class="recipe-image"/>
         
         <h2>Groceries</h2>
         <div id="groceryList" class="item-grid-3">
@@ -40,22 +40,14 @@ class RecipePageElement extends ObserverHTMLElement {
         </div>
 
         <h2>Recipe</h2>
-        <p>{{recipe.recipe}}</p>
+        <p class="display-text">{{recipe.recipe}}</p>
 
         <button id="editBtn" class="fab icon-button">
           <span class="material-symbols-outlined">edit</span>Edit
         </button>
       </div>
     `
-    const rendered = mustache.render(template, {
-      ...state,
-      recipePhoto: () => {
-        return state.recipe?.photoUrl ?? Constants.recipePlaceholder
-      },
-      photo: () => {
-        return this.photoUrl ?? Constants.groceryPlaceholder
-      }
-    })
+    const rendered = mustache.render(template, state)
     this.innerHTML = rendered
 
     const $editBtn = this.querySelector('#editBtn')

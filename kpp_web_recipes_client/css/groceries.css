@@ -22,7 +22,8 @@
 .grocery-item {
   display: flex;
   align-items: stretch;
-  border: 1px solid var(--blue-grotto)
+  border: 1px solid var(--blue-grotto);
+  scroll-margin: 16px;
 }
 
 .grocery-item img {
