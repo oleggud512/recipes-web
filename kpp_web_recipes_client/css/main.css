@@ -24,17 +24,28 @@ html, body {
 }
 
 body {
-  display: flex;
-  flex-direction: column;
-  /* for navbar-element */
-  position: relative;
-
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 18px;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: 
+    'header'
+    'main';
+}
+
+header-element {
+  grid-area: header;
 }
 
 main {
-  flex: 1 0 auto;
+  grid-area: main;
+  overflow: auto;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
 }
 
 .container {
