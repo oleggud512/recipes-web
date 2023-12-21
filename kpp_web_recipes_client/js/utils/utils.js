@@ -1,8 +1,10 @@
+const config = require('../../config')
+
 class Constants {
-  static baseUrl = 'http://192.168.0.142:3022'
+  static baseUrl = `http://${config.HOST}:${config.PORT}`
   static currentRecipeId = 'currentRecipeId'
 
-  static baseApiUrl = 'http://192.168.0.142:8080/api/v1/'
+  static baseApiUrl = `http://${config.API_HOST}:${config.API_PORT}/api/v1/`
   // static baseApiUrl = 'http://localhost:8080/api/v1/'
   static baseImageUrl = this.baseApiUrl + 'image/'
 

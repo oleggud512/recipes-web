@@ -9,6 +9,16 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./config.js":
+/*!*******************!*\
+  !*** ./config.js ***!
+  \*******************/
+/***/ ((module) => {
+
+eval("module.exports = {\n  HOST: '192.168.0.142',\n  PORT: 3022,\n  API_HOST: '192.168.0.142',\n  API_PORT: 8080\n};\n\n//# sourceURL=webpack://my-webpack-project/./config.js?");
+
+/***/ }),
+
 /***/ "./js/features/recipes/domain/repositories/recipe_repository.js":
 /*!**********************************************************************!*\
   !*** ./js/features/recipes/domain/repositories/recipe_repository.js ***!
@@ -153,9 +163,9 @@ eval("class Route {\n  constructor(args) {\n    this.name = args.name;\n    this
 /*!***************************!*\
   !*** ./js/utils/utils.js ***!
   \***************************/
-/***/ ((module) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-eval("class Constants {\n  static baseUrl = 'http://192.168.0.142:3022';\n  static currentRecipeId = 'currentRecipeId';\n  static baseApiUrl = 'http://192.168.0.142:8080/api/v1/';\n  // static baseApiUrl = 'http://localhost:8080/api/v1/'\n  static baseImageUrl = this.baseApiUrl + 'image/';\n  static recipePlaceholder = \"https://placehold.co/400x400/lightgrey/grey?text=No+image\";\n  static groceryPlaceholder = \"https://placehold.co/100x100/lightgrey/grey?text=No+image\";\n}\nfunction getPathSegments(href) {\n  const segments = new URL(href).pathname.split('/');\n  segments.splice(0, 1);\n  return segments;\n}\nmodule.exports = {\n  Constants,\n  getPathSegments\n};\n\n//# sourceURL=webpack://my-webpack-project/./js/utils/utils.js?");
+eval("const config = __webpack_require__(/*! ../../config */ \"./config.js\");\nclass Constants {\n  static baseUrl = `http://${config.HOST}:${config.PORT}`;\n  static currentRecipeId = 'currentRecipeId';\n  static baseApiUrl = `http://${config.API_HOST}:${config.API_PORT}/api/v1/`;\n  // static baseApiUrl = 'http://localhost:8080/api/v1/'\n  static baseImageUrl = this.baseApiUrl + 'image/';\n  static recipePlaceholder = \"https://placehold.co/400x400/lightgrey/grey?text=No+image\";\n  static groceryPlaceholder = \"https://placehold.co/100x100/lightgrey/grey?text=No+image\";\n}\nfunction getPathSegments(href) {\n  const segments = new URL(href).pathname.split('/');\n  segments.splice(0, 1);\n  return segments;\n}\nmodule.exports = {\n  Constants,\n  getPathSegments\n};\n\n//# sourceURL=webpack://my-webpack-project/./js/utils/utils.js?");
 
 /***/ }),
 

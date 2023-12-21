@@ -3,8 +3,7 @@ const mustache = require("mustache")
 const cors = require("cors")
 const fs = require("fs")
 const path = require("path")
-
-const PORT = 3022
+const config = require("./config")
 
 const app = express()
 
@@ -45,13 +44,7 @@ app.get("/groceries", (req, res) => {
   })
 })
 
-/*
-does that mean, that my client code and server code share some functionality?
-а зачем мне вообще нужно что-то преренедерить, если я 
-всеравно потом собираюсь это изменять на клиенте?
 
-*/
-
-app.listen(PORT, "192.168.0.142", () => {
-  console.log(`kpp web is up and running on port ${PORT}`)
+app.listen(config.PORT, config.HOST, () => {
+  console.log(`kpp web is up and running on port ${config.PORT}`)
 })
