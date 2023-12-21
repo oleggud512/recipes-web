@@ -1,3 +1,4 @@
+const { Templates } = require("../../../../../shared/templates/templates")
 const { GroceryListElementController } = require("./grocery_list_element_controller")
 
 
@@ -11,7 +12,6 @@ class GroceryListElement extends HTMLElement {
   $groceryList
 
   $searchInput
-  $searchBtn
   $clearSearchBtn
   $addGroceryBtn
 
@@ -59,21 +59,21 @@ class GroceryListElement extends HTMLElement {
   // (также, создаешь метод принимающий state)
   render(state) {
     const template = `
-      <div class="controls">
-        <input type="text" id="searchInput" placeholder="Type to search">
-        <button id="searchBtn">Search</button>
-        <button id="clearSearchBtn">Clear Search</button>
-        <button id="addGroceryBtn">Add New Grocery</button>
-      </div>
+      <div class="container">
+        ${Templates.search}
 
-      <div class="grocery-list" id="groceryList"></div>
+        <div class="grocery-list item-grid" id="groceryList"></div>
+
+        <button id="addGroceryBtn" class="fab icon-button">
+          <span class="material-symbols-outlined">add</span>Add New Grocery
+        </button>
+      </div>
     `
 
     this.innerHTML = template
 
     this.$searchInput = this.querySelector('#searchInput')
     this.$searchInput.value = state.query
-    this.$searchBtn = this.querySelector('#searchBtn')
     this.$clearSearchBtn = this.querySelector('#clearSearchBtn')
     this.$addGroceryBtn = this.querySelector('#addGroceryBtn')
 
@@ -111,8 +111,11 @@ class GroceryListElement extends HTMLElement {
       this._onQueryChanged(ev.target.value)
     })
 
-    this.$searchBtn.addEventListener('click', () => {
-      this._onSearch()
+    this.$searchInput.addEventListener('keyup', ev => {
+      if (ev.key === 'Enter' || ev.keyCode === 13) {
+        document.activeElement.blur()
+        this._onSearch()
+      }
     })
 
     this.$clearSearchBtn.addEventListener('click', () => {

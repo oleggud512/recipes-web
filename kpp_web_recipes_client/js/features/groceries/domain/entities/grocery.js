@@ -2,7 +2,7 @@ class Grocery {
   constructor( 
     id = 0, 
     name = '',
-    photoUrl = ''
+    photoUrl = null
   ) {
     this.id = id
     this.name = name

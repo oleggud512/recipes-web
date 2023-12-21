@@ -1,0 +1,42 @@
+@import "./search.css";
+@import "./grid.css";
+
+recipe-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.recipe-list {
+  margin-top: 16px;
+}
+
+.recipe-item {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  border: 1px solid var(--blue-grotto);
+  cursor: pointer;
+}
+
+.recipe-item img {
+  max-width: 100%;
+  height: 270px;
+  object-fit: cover;
+}
+
+.recipe-item .recipe-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+}
+
+.recipe-item .recipe-content span:last-child {
+  color: lightslategrey;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+

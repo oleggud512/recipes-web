@@ -1,3 +1,24 @@
+@import "./search.css";
+@import "./grid.css";
+
+.photo-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.delete-photo-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  margin: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.image-input {
+  display: none;
+}
+
 .grocery-item {
   display: flex;
   align-items: stretch;
@@ -5,8 +26,10 @@
 }
 
 .grocery-item img {
+  display: block;
   width: 100px;
   height: 100px;
+  cursor: pointer;
 }
 
 .grocery-item-content {
@@ -23,9 +46,6 @@
 
 .grocery-list {
   margin-top: 16px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
 }
 
 .grocery-item .buttons {
@@ -34,14 +54,16 @@
 }
 
 .buttons button {
+  display: flex;
+  align-items: center;
   margin-left: 8px;
+}
+
+.buttons input {
+  width: 100%;
 }
 
 .controls {
   display: flex;
   gap: 8px;
-}
-
-.controls input {
-  flex-grow: 1;
 }

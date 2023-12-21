@@ -1,4 +1,4 @@
-package com.example.KppWebRecipes.recipe;
+package com.example.KppWebRecipes.recipe.entities;
 
 import java.util.List;
 
@@ -7,5 +7,5 @@ public record RecipeQuery(
         String recipe,
         String description,
         String photoUrl,
-        List<Long> groceryIds) {
+        List<RecipeGrocery> groceries) {
 }

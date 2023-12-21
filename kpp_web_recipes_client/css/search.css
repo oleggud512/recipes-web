@@ -1,0 +1,33 @@
+.search-contaner {
+  margin: 0 auto;
+  max-width: 625px;
+  width: 100%;
+}
+
+.search {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--blue);
+  padding: 8px;
+}
+
+
+.search .search-icon {
+  margin-inline: 8px;
+}
+
+.search input {
+  border:none;
+  font-size: 16px;
+  max-width: none;
+  flex-grow: 1;
+}
+ 
+.search input:focus {
+  outline: none;
+}
+
+#clearSearchBtn {
+  color: grey;
+}

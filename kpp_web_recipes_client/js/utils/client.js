@@ -50,9 +50,10 @@
 // const client = new HttpClient("http://localhost:8080/api/v1")
 
 const axios = require("axios")
+const { Constants } = require("./utils")
 
 const client = axios.create({
-  baseURL: "http://localhost:8080/api/v1"
+  baseURL: Constants.baseApiUrl
 })
 
 module.exports = { client }

@@ -4,16 +4,26 @@ export type Grocery = {
   photoUrl: string
 }
 
-export type BaseRecipe<GroceryType = Grocery | number> = {
+export type RecipeGrocery = Grocery & { amount: number }
+
+export type Recipe = {
   id: number
   name: string
   recipe: string
   description: string
   photoUrl: string
-  groceries: GroceryType[]
+  groceries: RecipeGrocery[]
 }
 
-// TODO: (1) may be, change names?
-export type DisplayRecipe = BaseRecipe<Grocery>
-export type AddRecipe = BaseRecipe<number>
+export type ListRecipe = Omit<Recipe, "groceries">
 
+
+class RecipeRepository {
+  async findRecipesByName(name: string = '') : Promise<Recipe[]>
+  async findRecipeById(id: number) : Promise<Recipe>
+  async addNewRecipe(recipe: Recipe) : Promise<Recipe>
+  async updateRecipe(recipe: Recipe) : Promise<Recipe>
+  async deleteRecipe(id: number) : Promise<void>
+}
+
+export const recipeRepository: RecipeRepository

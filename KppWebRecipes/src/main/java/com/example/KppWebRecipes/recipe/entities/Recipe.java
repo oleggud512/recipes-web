@@ -1,41 +1,20 @@
-package com.example.KppWebRecipes.recipe;
+package com.example.KppWebRecipes.recipe.entities;
 
-import com.example.KppWebRecipes.grocery.Grocery;
-import jakarta.persistence.*;
-
+import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table
 public class Recipe {
-    @Id
-    @SequenceGenerator(
-            name = "recipe_sequence",
-            sequenceName = "recipe_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "recipe_sequence"
-    )
     private Long id;
     private String name;
     private String recipe;
     private String description;
     private String photoUrl;
-
-    @ManyToMany
-    @JoinTable(
-            name = "recipe_grocery",
-            joinColumns = @JoinColumn(name = "recipe_id"),
-            inverseJoinColumns = @JoinColumn(name = "grocery_id")
-    )
-    private List<Grocery> groceries;
+    private List<RecipeGrocery> groceries;
 
     public Recipe() {
     }
 
-    public Recipe(String name, String recipe, String description, String photoUrl, List<Grocery> groceries) {
+    public Recipe(String name, String recipe, String description, String photoUrl, List<RecipeGrocery> groceries) {
         this.name = name;
         this.recipe = recipe;
         this.description = description;
@@ -43,7 +22,16 @@ public class Recipe {
         this.groceries = groceries;
     }
 
-    public Recipe(Long id, String name, String recipe, String description, String photoUrl, List<Grocery> groceries) {
+    public Recipe(Long id, String name, String recipe, String description, String photoUrl) {
+        this.id = id;
+        this.name = name;
+        this.recipe = recipe;
+        this.description = description;
+        this.photoUrl = photoUrl;
+        this.groceries = new ArrayList<RecipeGrocery>();
+    }
+
+    public Recipe(Long id, String name, String recipe, String description, String photoUrl, List<RecipeGrocery> groceries) {
         this.id = id;
         this.name = name;
         this.recipe = recipe;
@@ -92,11 +80,11 @@ public class Recipe {
         this.photoUrl = photoUrl;
     }
 
-    public List<Grocery> getGroceries() {
+    public List<RecipeGrocery> getGroceries() {
         return groceries;
     }
 
-    public void setGroceries(List<Grocery> groceries) {
+    public void setGroceries(List<RecipeGrocery> groceries) {
         this.groceries = groceries;
     }
 

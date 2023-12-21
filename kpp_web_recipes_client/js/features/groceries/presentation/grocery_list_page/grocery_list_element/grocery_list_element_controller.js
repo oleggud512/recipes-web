@@ -2,6 +2,8 @@ const { Observable } = require('../../../../../utils/observable')
 const { Grocery } = require('../../../domain/entities/grocery')
 const { groceryRepository } = require('../../../domain/repositories/grocery_repository')
 const { GroceryListElementState } = require('./grocery_list_element_state')
+const { imageRepository } = require('../../../../../shared/image_repository/image_repository')
+const { Constants } = require('../../../../../utils/utils')
 
 
 class GroceryListElementController extends Observable {
@@ -59,7 +61,7 @@ class GroceryListElementController extends Observable {
     var newGroceries
     if (g) {
       await groceryRepository.deleteGrocery(groceryId)
-      newGroceries = this.state.groceries.filter(g => g.id != groceryId) // TODO: .splice() deletes the first element...
+      newGroceries = this.state.groceries.filter(g => g.id != groceryId)
     }
     
     this.emit({
@@ -78,6 +80,11 @@ class GroceryListElementController extends Observable {
       ? this.state.groceryToAdd
       : this.state.groceries.find(g => g.id == groceryId)
   
+    if (grocery.image) {
+      const photoId = await imageRepository.uploadImage(grocery.image)
+      grocery.photoUrl = Constants.baseImageUrl + photoId
+    }
+
     const newGrocery = groceryId == 0
       ? await groceryRepository.addNewGrocery(grocery)
       : await groceryRepository.updateGrocery(grocery)
@@ -89,7 +96,6 @@ class GroceryListElementController extends Observable {
       const i = newGroceries.indexOf(grocery)
       newGroceries[i] = newGrocery
     }
-
     this.emit({
       ...this.state,
       groceries: newGroceries,
@@ -114,6 +120,40 @@ class GroceryListElementController extends Observable {
       return
     }
     this.state.groceries.find(g => g.id == groceryId).name = newName
+  }
+
+  /**
+   * @param {File} newPhoto
+   */
+  async changePhoto(groceryId, newPhoto) {
+    const newGroceries = [...this.state.groceries]
+
+    const i = newGroceries.findIndex(g => g.id == groceryId)
+    newGroceries[i] = {
+      ...newGroceries[i],
+      image: newPhoto,
+      photoUrl: URL.createObjectURL(newPhoto)
+    }
+
+    this.emit({
+      ...this.state,
+      groceries: newGroceries
+    })
+  }
+
+  deletePhoto(groceryId) {
+    const newGroceries = [...this.state.groceries]
+    const i = newGroceries.findIndex(g => g.id == groceryId)
+    newGroceries[i] = {
+      ...newGroceries[i],
+      image: null,
+      photoUrl: null
+    }
+
+    this.emit({
+      ...this.state,
+      groceries: newGroceries
+    })
   }
 
 

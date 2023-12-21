@@ -52,6 +52,6 @@ does that mean, that my client code and server code share some functionality?
 
 */
 
-app.listen(PORT, () => {
+app.listen(PORT, "192.168.0.142", () => {
   console.log(`kpp web is up and running on port ${PORT}`)
 })

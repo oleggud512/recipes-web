@@ -1,0 +1,53 @@
+@import "./grid.css";
+
+.item-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.container {
+  padding-block: 16px;
+}
+
+.recipe-image {
+  cursor: pointer;
+}
+
+#imageContainer {
+  position: relative;
+}
+
+#image {
+  width: 100%;
+}
+
+#deleteImageBtn {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+}
+
+input[type=file] {
+  display: none;
+}
+
+.text-field {
+  padding: 8px;
+  border: 1px solid var(--blue);
+  color: grey;
+  border-radius: 0;
+  font-size: 16px;
+}
+
+.input-with-hint {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.delete {
+  background-color: #ff0000;
+}
+
+.delete:hover {
+  background-color: #ff7777;
+}

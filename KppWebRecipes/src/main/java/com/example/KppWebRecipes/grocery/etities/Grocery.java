@@ -1,28 +1,10 @@
-package com.example.KppWebRecipes.grocery;
+package com.example.KppWebRecipes.grocery.etities;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table
 public class Grocery {
 
-    @Id
-    // TODO: ЗАЧЕМ МНЕ ВООБЩЕ ЭТО НУЖНО?
-    @SequenceGenerator(
-            name = "grocery_sequence",
-            sequenceName = "grocery_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "grocery_sequence"
-    )
     private Long id;
     private String name;
     private String photoUrl;
-
-    // @Transient - тогда этого не будет в бд
-    // private Something something
 
     public Grocery() {
     }
@@ -36,6 +18,10 @@ public class Grocery {
     public Grocery(String name, String photoUrl) {
         this.name = name;
         this.photoUrl = photoUrl;
+    }
+
+    public Grocery(Long id) {
+        this.id = id;
     }
 
     public Long getId() {

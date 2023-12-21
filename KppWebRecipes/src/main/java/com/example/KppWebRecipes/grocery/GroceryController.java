@@ -1,12 +1,13 @@
 package com.example.KppWebRecipes.grocery;
 
-import jakarta.websocket.server.PathParam;
+import com.example.KppWebRecipes.grocery.etities.Grocery;
+import com.example.KppWebRecipes.grocery.etities.GroceryQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController // TODO: how to make RestController inside RestController
+@RestController // TODO: how to create RestController inside RestController
 @CrossOrigin
 @RequestMapping(path = "api/v1/grocery")
 public class GroceryController {
@@ -18,13 +19,12 @@ public class GroceryController {
     }
 
     @GetMapping
-    public List<Grocery> getGroceries(@RequestParam(required = false) String name) {
-        System.out.println(name);
-        return groceryService.getGroceries();
+    public List<Grocery> getGroceries(@RequestParam(required = false) String name) throws Exception {
+        return groceryService.getGroceries(name);
     }
 
     @PostMapping
-    public Grocery addNewGrocery(@RequestBody GroceryQuery grocery) {
+    public Grocery addNewGrocery(@RequestBody GroceryQuery grocery) throws Exception {
         System.out.println(grocery);
         return groceryService.addNewGrocery(
                 grocery.getName(),
@@ -32,14 +32,14 @@ public class GroceryController {
     }
 
     @DeleteMapping(path = "{groceryId}")
-    public void deleteGrocery(@PathVariable("groceryId") Long groceryId) {
+    public void deleteGrocery(@PathVariable("groceryId") Long groceryId) throws Exception {
         groceryService.deleteGrocery(groceryId);
     }
 
     @PutMapping(path = "{groceryId}")
     public Grocery updateGrocery(
             @PathVariable("groceryId") Long groceryId,
-            @RequestBody GroceryQuery grocery) {
+            @RequestBody GroceryQuery grocery) throws Exception {
         System.out.println(grocery);
         return groceryService.updateGrocery(
                 groceryId,

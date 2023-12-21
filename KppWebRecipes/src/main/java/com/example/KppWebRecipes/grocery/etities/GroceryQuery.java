@@ -1,4 +1,4 @@
-package com.example.KppWebRecipes.grocery;
+package com.example.KppWebRecipes.grocery.etities;
 
 public class GroceryQuery {
     private String name;

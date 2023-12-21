@@ -3,16 +3,16 @@ class Observable {
 
   _state
 
-  constructor(initstate) {
-    this._state = initstate
-    
+  constructor(initState) {
+    this._state = initState
+    this.emit(initState)
   }
 
   emit(state) {
     if (state == this._state) return
     
     this._state = state
-
+    
     for (const listener of this._listeners) {
       listener(state)
     }
@@ -28,6 +28,10 @@ class Observable {
   unsubscribe(listener) {
     if (!this._listeners.includes(listener)) throw `no listener ${listener}`
     this._listeners.splice(this._listeners.indexOf(listener), 1)
+  }
+
+  close() {
+    this._listeners = []
   }
 
   get state() {
@@ -58,6 +62,8 @@ class ObserverHTMLElement extends HTMLElement {
   /* eslint-disable */
   onStateChange(state) {}
 }
+
+
 module.exports = {
   Observable,
   ObserverHTMLElement
